@@ -1,0 +1,22 @@
+digraph D {
+
+  "light red" -> "bright white";
+  "light red" -> "muted yellow";
+
+  "dark orange" -> "bright white";
+  "dark orange" -> "muted yellow";
+
+  "bright white" -> "shiny gold";
+
+  "muted yellow" -> "shiny gold";
+  "muted yellow" -> "faded blue";
+
+  "shiny gold" -> "dark olive";
+  "shiny gold" -> "vibrant plum";
+
+  "dark olive" -> "faded blue";
+  "dark olive" -> "dotted black";
+
+  "vibrant plum" -> "faded blue";
+  "vibrant plum" -> "dotted black";
+}
