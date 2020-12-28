@@ -1,12 +1,11 @@
-import itertools
+from functools import reduce
+from typing import List
+
 import re
 import sys
 
 
-regex_mem = re.compile('mem\[([0-9]+)\] = ([0-9]+)')
-regex_msk = re.compile('mask = ([01X]{36})')
-
-def apply_bitmask(value, bitmask):
+def apply_bitmask(value: int, bitmask: str) -> int:
     v = value
     for i,b in enumerate(bitmask):
         if b == 'X':
@@ -19,8 +18,9 @@ def apply_bitmask(value, bitmask):
                 v -= 1 << (35 - i)
     return v
 
-def decoder_version_1():
-    lines = [l.strip() for l in open('14.in', 'r').readlines()]
+
+def decoder_version_1(lines: List[str]) -> int:
+    
     progmem = {}
     bitmask = 'X' * 36
 
@@ -34,9 +34,10 @@ def decoder_version_1():
             print("Unrecognized operation: ", line)
             sys.exit(1)
 
-    print(sum(progmem.values()))
+    return sum(progmem.values())
 
-def generate(mask, i=0):
+
+def generate(mask: str, i: int = 0) -> List[str]:
     for j in range(i, len(mask)):
         if mask[j] == 'X':
             return reduce(list.__add__, [
@@ -45,11 +46,10 @@ def generate(mask, i=0):
             ])
     return [mask]
 
-def decoder_version_2():
 
-    lines = [l.strip() for l in open('14.in', 'r').readlines()]
+def decoder_version_2(lines: List[str]) -> int:
+
     progmem = {}
-
     bitmask = '0' * 36
 
     for line in lines:
@@ -58,7 +58,7 @@ def decoder_version_2():
             address = '{0:b}'.format(int(address))
             address = '0' * (36-len(address)) + address
             address_mask = []
-            for a, b in itertools.izip(address, bitmask):
+            for a, b in zip(address, bitmask):
                 if b == '0':
                     address_mask.append(a)
                 elif b == '1':
@@ -73,7 +73,13 @@ def decoder_version_2():
             print("Unrecognized operation: ", line)
             sys.exit(1)
 
-    print(sum(progmem.values()))
+    return sum(progmem.values())
 
-decoder_version_1()
-decoder_version_2()
+
+lines = [l.strip() for l in open('14.in', 'r').readlines()]
+
+regex_mem = re.compile('mem\[([0-9]+)\] = ([0-9]+)')
+regex_msk = re.compile('mask = ([01X]{36})')
+
+print(decoder_version_1(lines))
+print(decoder_version_2(lines))
