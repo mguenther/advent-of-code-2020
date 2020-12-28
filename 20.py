@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Any, Dict, List, NoReturn, Tuple
 
 import math
 import pprint
@@ -27,7 +27,7 @@ def flip_s(xs: List[str]) -> List[str]:
     return r
 
 
-def parse(filename: str) -> Dict:
+def parse(filename: str) -> Dict[int, Dict[str, Any]]:
 
     raw_tiles = [l for l in open(filename, 'r').read().strip().split('\n\n')]
     tiles = {}
@@ -57,7 +57,7 @@ def parse(filename: str) -> Dict:
     return tiles
 
 
-def assemble(tiles):
+def assemble(tiles: Dict[int, Dict[str, Any]]) -> List[List[Tuple[int,int]]]:
 
     N = int(math.sqrt(len(tiles)))
     grid = [[(0,0)] * N for _ in range(N) ] # 1st: tile ID, 2nd: chosen orientation
@@ -112,7 +112,7 @@ def assemble(tiles):
     return grid
 
 
-def augment_with_neighbouring_edges(tiles):
+def augment_with_neighbouring_edges(tiles: Dict[int, Dict[str, Any]]) -> NoReturn:
     for i, l in tiles.items():
         for j, r in tiles.items():
             if i == j:
@@ -123,7 +123,7 @@ def augment_with_neighbouring_edges(tiles):
                 tiles[j]['neighbours'].add(i)
 
 
-def find_tiles_with_neighbours(neighbours, tiles):
+def find_tiles_with_neighbours(neighbours: int, tiles: Dict[int, Dict[str, Any]]) -> Dict[int, Dict[str, Any]]:
     subset_of_tiles = {}
     for i, l in tiles.items():
         if len(tiles[i]['neighbours']) == neighbours:
@@ -131,19 +131,11 @@ def find_tiles_with_neighbours(neighbours, tiles):
     return subset_of_tiles
 
 
-def find_corners(tiles):
+def find_corners(tiles: Dict[int, Dict[str, Any]]) -> Dict[int, Dict[str, Any]]:
     return find_tiles_with_neighbours(2, tiles)
 
 
-def find_edges(tiles):
-    return find_tiles_with_neighbours(3, tiles)
-
-
-def find_inner_tiles(tiles):
-    return find_tiles_with_neighbours(4, tiles)
-
-
-def place(tiles, assembly):
+def place(tiles: Dict[int, Dict[str, Any]], assembly: List[List[Tuple[int,int]]]) -> str:
     N = int(math.sqrt(len(tiles)))
     puzzle = ''
     for puzzle_row in range(N):
@@ -157,7 +149,7 @@ def place(tiles, assembly):
     return puzzle
 
 
-def part_one(tiles):
+def solve_first_part(tiles: Dict[int, Dict[str, Any]]) -> int:
     result = 1
     for i, l in find_corners(tiles).items():
         if len(tiles[i]['neighbours']) == 2:
@@ -165,7 +157,7 @@ def part_one(tiles):
     return result
 
 
-def part_two(tiles):
+def solve_second_part(tiles: Dict[int, Dict[str, Any]]) -> int:
 
     assembly = assemble(tiles)
 
@@ -198,7 +190,7 @@ def part_two(tiles):
             return result
 
 
-# I borrowed a couple of things from https://github.com/kresimir-lukin/AdventOfCode2020/blob/main/day20.py
+# I borrowed a couple of things for the second part from https://github.com/kresimir-lukin/AdventOfCode2020/blob/main/day20.py
 
 TRACING = False
 BORDER_LENGTH_OF_TILE = 10
@@ -206,5 +198,5 @@ BORDER_LENGTH_OF_TILE = 10
 tiles = parse('20.in')
 augment_with_neighbouring_edges(tiles)
 
-print("Part one: " + str(part_one(tiles)))
-print("Part two: " + str(part_two(tiles)))
+print(solve_first_part(tiles))
+print(solve_second_part(tiles))
