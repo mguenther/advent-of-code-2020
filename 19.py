@@ -14,6 +14,7 @@ def parse_input(filename):
         rules[id] = productions
     return rules, raw_words
 
+
 production_to_segment_cache = {}
 def build_dictionary(rules, rule_id='0'):
     
