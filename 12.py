@@ -1,10 +1,13 @@
-def partOne():
+from typing import List
+
+
+def solve_first_part(instructions: List[str]) -> int:
 
     pos = (0, 0) # N/S, W/E
     face = 'E'
     faces = ['N', 'E', 'S', 'W']
 
-    for instruction in [l for l in open('12.in').readlines()]:
+    for instruction in instructions:
         operator = instruction[0]
         operand = int(instruction[1:])
         if operator == 'F':
@@ -25,21 +28,21 @@ def partOne():
         elif operator == 'W':
             pos = (pos[0], pos[1] - operand)
         elif operator == 'L':
-            face = faces[(faces.index(face) - (operand / 90)) % len(faces)]
+            face = faces[(faces.index(face) - int(operand / 90)) % len(faces)]
         elif operator == 'R':
-            face = faces[(faces.index(face) + (operand / 90)) % len(faces)]
+            face = faces[(faces.index(face) + int(operand / 90)) % len(faces)]
 
-    print("Position: ", pos)
-    print("Manhattan distance: ", (abs(pos[0]) + abs(pos[1])))
+    return abs(pos[0]) + abs(pos[1])
 
-def partTwo():
+
+def solve_second_part(instructions: List[str]) -> int:
 
     pos = (0, 0) # N/S, W/E
     waypoint = (-1, 10) # N/S, W/E
     face = 'E'
     faces = ['N', 'E', 'S', 'W']
 
-    for instruction in [l for l in open('12.in').readlines()]:
+    for instruction in instructions:
         operator = instruction[0]
         operand = int(instruction[1:])
         if operator == 'F':
@@ -53,15 +56,18 @@ def partTwo():
         elif operator == 'W':
             waypoint = (waypoint[0], waypoint[1] - operand)
         elif operator == 'L':
-            times = operand / 90
+            times = int(operand / 90)
             for i in range(times):
                 waypoint = (-1 * waypoint[1], waypoint[0])
         elif operator == 'R':
-            times = operand / 90
+            times = int(operand / 90)
             for i in range(times):
                 waypoint = (waypoint[1], -1 * waypoint[0])
 
-    print("Position: ", pos)
-    print("Manhattan distance: ", (abs(pos[0]) + abs(pos[1])))
+    return abs(pos[0]) + abs(pos[1])
 
-partTwo()
+
+instructions = [l for l in open('12.in', 'r').readlines()]
+
+print(solve_first_part(instructions))
+print(solve_second_part(instructions))
