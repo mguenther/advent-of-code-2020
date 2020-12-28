@@ -1,7 +1,11 @@
-def find_seat(boarding_code):
+from typing import List
+
+
+def find_seat(boarding_code: str) -> int:
     return int(boarding_code.replace('B', '1').replace('F', '0').replace('R', '1').replace('L', '0'), 2)
 
-def highest_seat_id(list_of_boarding_codes):
+
+def highest_seat_id(list_of_boarding_codes: List[str]) -> int:
     highest = 0
     for boarding_code in list_of_boarding_codes:
         seat_id = find_seat(boarding_code)
@@ -9,7 +13,8 @@ def highest_seat_id(list_of_boarding_codes):
             highest = seat_id
     return highest
 
-def missing_seat_id(list_of_boarding_codes):
+
+def missing_seat_id(list_of_boarding_codes: List[str]) -> int:
     seat_ids = [find_seat(boarding_code) for boarding_code in list_of_boarding_codes]
     seat_ids.sort()
     missing = 0
@@ -21,7 +26,7 @@ def missing_seat_id(list_of_boarding_codes):
         l = seat_ids[i]
     return missing
 
-if __name__ == "__main__":
-    list_of_boarding_codes = [b.strip() for b in open('/home/pi/Documents/AdventOfCode/5.in', 'r').readlines()]
-    print highest_seat_id(list_of_boarding_codes)
-    print missing_seat_id(list_of_boarding_codes)
+
+list_of_boarding_codes = [b.strip() for b in open('5.in', 'r').readlines()]
+print(highest_seat_id(list_of_boarding_codes))
+print(missing_seat_id(list_of_boarding_codes))

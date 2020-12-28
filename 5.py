@@ -1,10 +1,15 @@
+# This solution works with Python 2.7. It won't give you the correct result
+# if you use Python 3.x.
+
 def lower_half(rows):
     l, r = rows
     return (l, l + (r - l) / 2)
 
+
 def upper_half(rows):
     l, r = rows
     return (l + 1 + (r - l) / 2, r)
+
 
 def find_row(boarding_code):
     row = 0
@@ -20,6 +25,7 @@ def find_row(boarding_code):
             row = rows[1]
     return row
 
+
 def find_column(boarding_code):
     column = 0
     columns = (0, 7)
@@ -34,8 +40,10 @@ def find_column(boarding_code):
             column = columns[1]
     return column
 
+
 def find_seat(boarding_code):
     return find_row(boarding_code) * 8 + find_column(boarding_code)
+
 
 def highest_seat_id(list_of_boarding_codes):
     highest = 0
@@ -44,6 +52,7 @@ def highest_seat_id(list_of_boarding_codes):
         if seat_id > highest:
             highest = seat_id
     return highest
+
 
 def missing_seat_id(list_of_boarding_codes):
     seat_ids = [find_seat(boarding_code) for boarding_code in list_of_boarding_codes]
@@ -57,7 +66,7 @@ def missing_seat_id(list_of_boarding_codes):
         l = seat_ids[i]
     return missing
 
-if __name__ == "__main__":
-    list_of_boarding_codes = [b.strip() for b in open('/home/pi/Documents/AdventOfCode/5.in', 'r').readlines()]
-    print highest_seat_id(list_of_boarding_codes)
-    print missing_seat_id(list_of_boarding_codes)
+
+list_of_boarding_codes = [b.strip() for b in open('5.in', 'r').readlines()]
+print(highest_seat_id(list_of_boarding_codes))
+print(missing_seat_id(list_of_boarding_codes))
