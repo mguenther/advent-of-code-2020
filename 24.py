@@ -11,7 +11,6 @@ d = {
 
 tiles = {}
 
-# wasn't necessary for part one
 for x in range(-100,100):
     for y in range(-100, 100):
         tiles[(x,y)] = True
@@ -30,10 +29,7 @@ for moves in lines:
             i += 1
         else:
             raise Exception('Unable to process line: ' + moves)
-    #if pos in tiles:
     tiles[pos] = not tiles[pos]
-    #else:
-    #    tiles[pos] = False
 
 res = 0
 for pos in tiles:
