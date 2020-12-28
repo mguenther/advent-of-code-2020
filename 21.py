@@ -57,7 +57,7 @@ while len(allergences_to_recipes) > 0:
 res = 0
 for recipe in recipes:
     res += len(recipes[recipe]['ingredients'])
-print("Solution to part one: " + str(res))
+print(res)
 
 F.sort()
-print("Solution to part two: " + ','.join([i[1] for i in F]))
+print(','.join([i[1] for i in F]))
