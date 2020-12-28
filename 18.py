@@ -19,5 +19,5 @@ res1 = sum(map(lambda x: eval(x), ops1))
 ops2 = [re.sub('(\d+)', r'Number(\1)', l.strip().replace('*', '-').replace('+', '*')) for l in open('18.in', 'r').readlines()]
 res2 = sum(map(lambda x: eval(x), ops2))
 
-print("Solution to part one: " + str(res1))
-print("Solution to part two: " + str(res2))
+print(res1)
+print(res2)
