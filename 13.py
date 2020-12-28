@@ -50,7 +50,7 @@ def solve_second_part_slowly(schedule):
 # busses by looking for their intersecting timestamp. Multiples of this
 # intersecting timestamp will always retain the same relationship between
 # the first two busses. Now, we look for an multiple (respecting the offset,
-# of course!) of that timestamp that conforms also with th next bus (and so on),
+# of course!) of that timestamp that conforms also with the next bus (and so on),
 # adjusting timestamps on the way. Due to the fact that the bus schedules are
 # prime, we are guaranteed to get the earliest solution that respects all busses
 # using this approach.
