@@ -1,4 +1,7 @@
-def spoken_number_after(iterations, starting_numbers):
+from typing import List
+
+
+def spoken_number_after(iterations: int, starting_numbers: List[int]) -> int:
     memory = {}
     i = 1
     last_number = None
@@ -24,6 +27,7 @@ def spoken_number_after(iterations, starting_numbers):
         i += 1
 
     return spoken_number
+
 
 print(spoken_number_after(2020, [6,13,1,15,2,0]))
 print(spoken_number_after(30000000, [6,13,1,15,2,0]))
