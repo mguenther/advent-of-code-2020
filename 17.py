@@ -1,7 +1,6 @@
 from typing import Set, Tuple
 
 import itertools
-import pprint
 
 
 def number_of_neighbours(coordinate: Tuple[int,int,int,int], M: Set[Tuple[int,int,int,int]]) -> int:
@@ -14,10 +13,12 @@ def number_of_neighbours(coordinate: Tuple[int,int,int,int], M: Set[Tuple[int,in
             neighbours += 1
     return neighbours
 
-lines = [l.strip() for l in open('17.sample', 'r').readlines()]
+
+lines = [l.strip() for l in open('17.in', 'r').readlines()]
 l, u = -15, 15
 M = set()
 M_ = set()
+
 for i,x in enumerate(lines):
     for j,y in enumerate(x):
         if y == '#':
