@@ -1,7 +1,7 @@
 import sys
 
 
-def solvePartOne():
+def solve_first_part():
 
     def earliest_departure_by_bus(bus, left, right):
         return [i % bus for i in range(left, right+1)].index(0)
@@ -15,33 +15,12 @@ def solvePartOne():
     print(bus, waiting)
     print(bus * waiting)
 
-schedule = [bus for bus in [l for l in open('13.in').readlines()][1].strip().split(',')]
-
-# We build up the solution by solving the relation between the first two
-# busses by looking for their intersecting timestamp. Multiples of this
-# intersecting timestamp will always retain the same relationship between
-# the first two busses. Now, we look for an multiple (respecting the offset,
-# of course!) of that timestamp that conforms also with th next bus (and so on),
-# adjusting timestamps on the way. Due to the fact that the bus schedules are
-# prime, we are guaranteed to get the earliest solution that respects all busses
-# using this approach.
-def solvePartTwo(schedule):
-    schedule_with_indices = [(offset, int(bus)) for offset, bus in enumerate(schedule) if bus != 'x']
-    timestamp = 0
-    lcm = 1
-    for offset, bus in schedule_with_indices:
-        while (timestamp + offset) % bus != 0:
-            timestamp += lcm
-        lcm *= bus
-    return timestamp
-
-print(solvePartTwo(schedule))
 
 # This was my first solution which iteratively increases the lowest bus
 # offset until we found a solution that satisfies timestampes for all busses.
 # This runs slow for the samples (up to 10-30 seconds) and becomes unbearable
 # if we run this against the input data (it will take hours on a fast machine).
-def solvePartTwoTooSlow(schedule):
+def solve_second_part_slowly(schedule):
     while True:
 
         bus, smallest_departure_at = min(schedule, key=lambda x: x[1])
@@ -65,3 +44,26 @@ def solvePartTwoTooSlow(schedule):
         if is_contiguous:
             print(departure_at)
             sys.exit(0)
+
+
+# We build up the solution by solving the relation between the first two
+# busses by looking for their intersecting timestamp. Multiples of this
+# intersecting timestamp will always retain the same relationship between
+# the first two busses. Now, we look for an multiple (respecting the offset,
+# of course!) of that timestamp that conforms also with th next bus (and so on),
+# adjusting timestamps on the way. Due to the fact that the bus schedules are
+# prime, we are guaranteed to get the earliest solution that respects all busses
+# using this approach.
+def solve_second_part(schedule):
+    schedule_with_indices = [(offset, int(bus)) for offset, bus in enumerate(schedule) if bus != 'x']
+    timestamp = 0
+    lcm = 1
+    for offset, bus in schedule_with_indices:
+        while (timestamp + offset) % bus != 0:
+            timestamp += lcm
+        lcm *= bus
+    return timestamp
+
+
+schedule = [bus for bus in [l for l in open('13.in').readlines()][1].strip().split(',')]
+print(solve_second_part(schedule))
