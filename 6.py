@@ -1,12 +1,12 @@
 from collections import defaultdict
 
 
-def solveFirstPart():
+def solve_first_part() -> int:
 
     sum = 0
     questionnaire = {}
 
-    for line in open('/home/pi/Documents/AdventOfCode/6.in', 'r'):
+    for line in open('6.in', 'r'):
         if not line.strip():
             sum += len(questionnaire)
             questionnaire = {}
@@ -16,13 +16,14 @@ def solveFirstPart():
 
     return sum
 
-def solveSecondPart():
+
+def solve_second_part() -> int:
 
     sum = 0
     questionnaire = defaultdict(lambda: 0)
     group_size = 0
 
-    for line in open('/home/pi/Documents/AdventOfCode/6.in', 'r'):
+    for line in open('6.in', 'r'):
         if not line.strip():
             for question in questionnaire.keys():
                 if questionnaire[question] == group_size:
@@ -36,5 +37,6 @@ def solveSecondPart():
             group_size += 1
     return sum
 
-print "Solution to first part: " + str(solveFirstPart())
-print "Solutions to second part: " + str(solveSecondPart())
+
+print(solve_first_part())
+print(solve_second_part())
